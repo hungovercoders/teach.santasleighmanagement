@@ -200,7 +200,53 @@ paths:
                 minItems: 0
                 items:
                   $ref: "#/components/schemas/Reindeer"
-
+              examples:
+                oneReindeer:
+                  summary: Single reindeer response
+                  value:
+                    - id: reindeer1
+                      name: Rudolph
+                      age: 6
+                      nose_colour: red
+                allReindeer:
+                  summary: All reindeers response
+                  value:
+                    - id: reindeer1
+                      name: Rudolph
+                      age: 6
+                      nose_colour: red
+                    - id: reindeer2
+                      name: Prancer
+                      age: 10
+                      nose_colour: green
+                    - id: reindeer3
+                      name: Dasher
+                      age: 5
+                      nose_colour: red
+                    - id: reindeer4
+                      name: Dancer
+                      age: 7
+                      nose_colour: blue
+                    - id: reindeer5
+                      name: Vixen
+                      age: 8
+                      nose_colour: red
+                    - id: reindeer6
+                      name: Comet
+                      age: 9
+                      nose_colour: green
+                    - id: reindeer7
+                      name: Cupid
+                      age: 4
+                      nose_colour: red
+                    - id: reindeer8
+                      name: Donner
+                      age: 3
+                      nose_colour: blue
+                    - id: reindeer9
+                      name: Blitzen
+                      age: 2
+                      nose_colour: green
   /reindeers/{reindeerId}:
     delete:
       summary: Remove a reindeer from santas sleigh
