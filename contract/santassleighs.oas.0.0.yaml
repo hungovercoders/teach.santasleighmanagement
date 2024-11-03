@@ -212,25 +212,7 @@ paths:
                     details:
                       - The 'notes' field must be at most 100 characters long.
         "500":
-          description: Internal Server Error - something went wrong on the server side.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: General error message indicating a server issue.
-                  message:
-                    type: string
-                    description: Additional details about the error, if available.
-              examples:
-                serverErrorExample:
-                  summary: Example response for a server error
-                  value:
-                    error: Internal Server Error
-                    message: An unexpected error occurred. Please try again later.
-
+          $ref: "#/components/responses/500"
     get:
       summary: List reindeer assigned to santas sleigh
       operationId: getReindeerForSleigh
@@ -296,7 +278,49 @@ paths:
                       name: Blitzen
                       age: 2
                       nose_colour: green
+        "500":
+          $ref: "#/components/responses/500"
   /reindeers/{reindeerId}:
+    get:
+      summary: Get specific reindeer details
+      operationId: getReindeer
+      parameters:
+        - in: path
+          name: reindeerId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Reindeer"
+      responses:
+        "200":
+          description: Specific reindeer details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reindeer"
+              examples:
+                Rudolph:
+                  summary: Rudolph response
+                  value:
+                    - id: reindeer1
+                      name: Rudolph
+                      age: 6
+                      nose_colour: red
+                      notes: Rudolph has a shiny nose.
+                Comet:
+                  summary: Comet response
+                  value:
+                    - id: reindeer6
+                      name: Comet
+                      age: 9
+                      nose_colour: green
+        "500":
+          $ref: "#/components/responses/500"
     delete:
       summary: Remove a reindeer from santas sleigh
       operationId: deleteReindeerFromSleigh
@@ -309,6 +333,8 @@ paths:
       responses:
         "204":
           description: Reindeer removed successfully.
+        "500":
+          $ref: "#/components/responses/500"
 
     put:
       summary: Update reindeer details for a specific sleigh
@@ -325,10 +351,12 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Reindeer"
-
       responses:
         "200":
           description: Reindeer updated successfully.
+        "500":
+          $ref: "#/components/responses/500"
+
 
 components:
   securitySchemes:
@@ -387,3 +415,24 @@ components:
               type: string
               description: Unique identifier for the reindeer.
               example: reindeer1
+
+  responses:
+    "500":
+      description: Internal Server Error - something went wrong on the server side.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: General error message indicating a server issue.
+              message:
+                type: string
+                description: Additional details about the error, if available.
+          examples:
+            serverErrorExample:
+              summary: Example response for a server error
+              value:
+                error: Internal Server Error
+                message: An unexpected error occurred. Please try again later.
