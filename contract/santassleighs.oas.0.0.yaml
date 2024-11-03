@@ -17,10 +17,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewReindeer'
+              $ref: "#/components/schemas/NewReindeer"
+              examples:
+                  validRequest:
+                    summary: A valid request
+                    value:
+                      name: Dasher
+                      age: 5
+                      nose_colour: red
+                  missingName:
+                    summary: Request with missing 'name' field
+                    value:
+                      age: 5
+                      nose_colour: red
       responses:
         "201":
           description: Reindeer added successfully.
+        "400":
+          description: Bad request - missing required 'name' field.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: General error message for the bad request.
+                  details:
+                    type: array
+                    items:
+                      type: string
+                      description: Specific error details.
+              examples:
+                missingName:
+                  summary: Error response for missing 'name' field
+                  value:
+                    error: Invalid request body
+                    details:
+                      - The 'name' field is required.
 
     get:
       summary: List reindeer assigned to santas sleigh
@@ -33,8 +67,9 @@ paths:
               schema:
                 type: array
                 maxItems: 9
+                minItems: 0
                 items:
-                  $ref: '#/components/schemas/Reindeer' 
+                  $ref: "#/components/schemas/Reindeer"
 
   /reindeers/{reindeerId}:
     delete:
@@ -64,8 +99,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Reindeer'
-              
+              $ref: "#/components/schemas/Reindeer"
+
       responses:
         "200":
           description: Reindeer updated successfully.
@@ -113,7 +148,7 @@ components:
 
     Reindeer:
       allOf:
-        - $ref: '#/components/schemas/NewReindeer'
+        - $ref: "#/components/schemas/NewReindeer"
         - type: object
           properties:
             id:
