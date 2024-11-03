@@ -1,0 +1,122 @@
+openapi: 3.0.3
+security:
+  - ApiKeyAuth: []
+info:
+  title: Santa's Reindeer Management API
+  description: CRUD API for managing reindeer assignments to santas sleigh.
+  version: 1.0.0
+servers:
+  - url: https://api.northpole.santa/sleighs
+paths:
+  /reindeers:
+    post:
+      summary: Add a reindeer to a country-specific sleigh
+      operationId: addReindeerToSleigh
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewReindeer'
+      responses:
+        "201":
+          description: Reindeer added successfully.
+
+    get:
+      summary: List reindeer assigned to santas sleigh
+      operationId: getReindeerForSleigh
+      responses:
+        "200":
+          description: List of reindeer for santas sleigh.
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 9
+                items:
+                  $ref: '#/components/schemas/Reindeer' 
+
+  /reindeers/{reindeerId}:
+    delete:
+      summary: Remove a reindeer from santas sleigh
+      operationId: deleteReindeerFromSleigh
+      parameters:
+        - in: path
+          name: reindeerId
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Reindeer removed successfully.
+
+    put:
+      summary: Update reindeer details for a specific sleigh
+      operationId: updateReindeerInSleigh
+      parameters:
+        - in: path
+          name: reindeerId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reindeer'
+              
+      responses:
+        "200":
+          description: Reindeer updated successfully.
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  schemas:
+    NewReindeer:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the reindeer.
+          example: Dasher
+          enum:
+            - Dasher
+            - Dancer
+            - Prancer
+            - Vixen
+            - Comet
+            - Cupid
+            - Donner
+            - Blitzen
+            - Rudolph
+        age:
+          type: integer
+          description: Age of the reindeer in years.
+          example: 5
+          minimum: 0
+          maximum: 100
+        nose_colour:
+          type: string
+          description: Colour of the reindeer's nose.
+          example: red
+          enum:
+            - red
+            - blue
+            - green
+
+    Reindeer:
+      allOf:
+        - $ref: '#/components/schemas/NewReindeer'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the reindeer.
+              example: reindeer1
