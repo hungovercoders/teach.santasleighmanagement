@@ -19,17 +19,52 @@ paths:
             schema:
               $ref: "#/components/schemas/NewReindeer"
             examples:
-                validRequest:
-                  summary: A valid request
+                validRudolphRequest:
+                  summary: Rudolph Request
                   value:
-                    name: Dasher
+                    name: Rudolph
                     age: 6
                     nose_colour: red
+                validPrancerRequest:
+                  summary: Prancer Request
+                  value:
+                    name: Prancer
+                    age: 10
+                    nose_colour: green
+                invalidNameRequest:
+                  summary: Invalid name request
+                  value:
+                    name: Steve
+                    age: 6
+                    nose_colour: red
+                invalidAgeRequest:
+                  summary: Invalid age request
+                  value:
+                    name: Rudolph
+                    age: 101
+                    nose_colour: red
+                invalidNoseColourRequest:
+                  summary: Invalid nose colour request
+                  value:
+                    name: Rudolph
+                    age: 5
+                    nose_colour: purple
                 missingName:
-                  summary: Request with missing 'name' field
+                  summary: Request with missing name field
                   value:
                     age: 5
                     nose_colour: red
+                missingAge:
+                  summary: Request with missing age field
+                  value:
+                    name: Dasher
+                    nose_colour: red
+                missingNoseColour:
+                  summary: Request with missing nose colour field
+                  value:
+                    name: Dasher
+                    age: 5
+
       responses:
         "201":
           description: Reindeer added successfully.
