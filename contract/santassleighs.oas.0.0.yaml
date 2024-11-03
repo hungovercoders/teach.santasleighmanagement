@@ -18,18 +18,18 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/NewReindeer"
-              examples:
-                  validRequest:
-                    summary: A valid request
-                    value:
-                      name: Dasher
-                      age: 5
-                      nose_colour: red
-                  missingName:
-                    summary: Request with missing 'name' field
-                    value:
-                      age: 5
-                      nose_colour: red
+            examples:
+                validRequest:
+                  summary: A valid request
+                  value:
+                    name: Dasher
+                    age: 6
+                    nose_colour: red
+                missingName:
+                  summary: Request with missing 'name' field
+                  value:
+                    age: 5
+                    nose_colour: red
       responses:
         "201":
           description: Reindeer added successfully.
