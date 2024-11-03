@@ -1,6 +1,6 @@
 openapi: 3.0.3
-security:
-  - ApiKeyAuth: []
+# security:
+#   - ApiKeyAuth: []
 info:
   title: Santa's Reindeer Management API
   description: CRUD API for managing reindeer assignments to santas sleigh.
