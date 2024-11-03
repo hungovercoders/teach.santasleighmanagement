@@ -253,6 +253,7 @@ paths:
                       name: Rudolph
                       age: 6
                       nose_colour: red
+                      notes: Rudolph has a shiny nose.
                 allReindeer:
                   summary: All reindeers response
                   value:
@@ -260,6 +261,7 @@ paths:
                       name: Rudolph
                       age: 6
                       nose_colour: red
+                      notes: Rudolph has a shiny nose.
                     - id: reindeer2
                       name: Prancer
                       age: 10
@@ -272,6 +274,7 @@ paths:
                       name: Dancer
                       age: 7
                       nose_colour: blue
+                      notes: Dancer is a graceful reindeer.
                     - id: reindeer5
                       name: Vixen
                       age: 8
@@ -287,6 +290,7 @@ paths:
                     - id: reindeer8
                       name: Donner
                       age: 3
+                      notes: Donner is a strong reindeer.
                       nose_colour: blue
                     - id: reindeer9
                       name: Blitzen
