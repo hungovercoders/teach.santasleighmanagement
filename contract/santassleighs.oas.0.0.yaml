@@ -64,12 +64,42 @@ paths:
                   value:
                     name: Dasher
                     age: 5
+                missingNameInvalidColour:
+                  summary: Request with missing name field and invalid colour field
+                  value:
+                    age: 5
+                    nose_colour: black
+                invalidNameInvalidAgeInvalidColour:
+                  summary: Request with invaid name, age and colour fields
+                  value:
+                    name: Steve
+                    age: 200
+                    nose_colour: orange
 
       responses:
         "201":
           description: Reindeer added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reindeer'
+              examples:
+                successfulRudolphResponse:
+                  summary: Response for successfully adding Rudolph
+                  value:
+                    id: reindeer1
+                    name: Rudolph
+                    age: 6
+                    nose_colour: red
+                successfulPrancerResponse:
+                  summary: Response for successfully adding Prancer
+                  value:
+                    id: reindeer2
+                    name: Prancer
+                    age: 10
+                    nose_colour: green
         "400":
-          description: Bad request - missing required 'name' field.
+          description: Bad request - validation errors.
           content:
             application/json:
               schema:
@@ -80,16 +110,81 @@ paths:
                     description: General error message for the bad request.
                   details:
                     type: array
+                    maxItems: 3
                     items:
                       type: string
                       description: Specific error details.
               examples:
-                missingName:
-                  summary: Error response for missing 'name' field
+                invalidNameError:
+                  summary: Error response for invalid name
+                  value:
+                    error: Invalid request body
+                    details:
+                      - "The 'name' field must be one of: Dasher, Dancer, Prancer, Vixen, Comet, Cupid, Donner, Blitzen, Rudolph."
+                invalidAgeError:
+                  summary: Error response for invalid age
+                  value:
+                    error: Invalid request body
+                    details:
+                      - The 'age' field must be an integer between 0 and 100.
+                invalidNoseColourError:
+                  summary: Error response for invalid nose colour
+                  value:
+                    error: Invalid request body
+                    details:
+                      - "The 'nose_colour' field must be one of: red, blue, green."
+                missingNameError:
+                  summary: Error response for missing name field
                   value:
                     error: Invalid request body
                     details:
                       - The 'name' field is required.
+                missingAgeError:
+                  summary: Error response for missing age field
+                  value:
+                    error: Invalid request body
+                    details:
+                      - The 'age' field is required.
+                missingNoseColourError:
+                  summary: Error response for missing nose colour field
+                  value:
+                    error: Invalid request body
+                    details:
+                      - The 'nose_colour' field is required.
+                missingNameInvalidColour:
+                  summary: Error response for missing name and invalid colour
+                  value:
+                    error: Invalid request body
+                    details:
+                      - The 'name' field is required.
+                      - "The 'nose_colour' field must be one of: red, blue, green."
+                invalidNameInvalidAgeInvalidColour:
+                  summary: Error response for invalid name, age, and colour
+                  value:
+                    error: Invalid request body
+                    details:
+                      - "The 'name' field must be one of: Dasher, Dancer, Prancer, Vixen, Comet, Cupid, Donner, Blitzen, Rudolph."
+                      - The 'age' field must be an integer between 0 and 100.
+                      - "The 'nose_colour' field must be one of: red, blue, green."
+        "500":
+          description: Internal Server Error - something went wrong on the server side.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: General error message indicating a server issue.
+                  message:
+                    type: string
+                    description: Additional details about the error, if available.
+              examples:
+                serverErrorExample:
+                  summary: Example response for a server error
+                  value:
+                    error: Internal Server Error
+                    message: An unexpected error occurred. Please try again later.
 
     get:
       summary: List reindeer assigned to santas sleigh
