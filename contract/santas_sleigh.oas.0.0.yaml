@@ -211,6 +211,8 @@ paths:
                     error: Invalid request body
                     details:
                       - The 'notes' field must be at most 100 characters long.
+        "401":
+          $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
     get:
@@ -278,6 +280,8 @@ paths:
                       name: Blitzen
                       age: 2
                       nose_colour: green
+        "401":
+          $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
   /reindeers/{reindeerId}:
@@ -319,8 +323,13 @@ paths:
                       name: Comet
                       age: 9
                       nose_colour: green
+        "401":
+          $ref: "#/components/responses/401"
+        "404":
+          $ref: "#/components/responses/Reindeer_404"
         "500":
           $ref: "#/components/responses/500"
+
     delete:
       summary: Remove a reindeer from santas sleigh
       operationId: deleteReindeerFromSleigh
@@ -333,6 +342,10 @@ paths:
       responses:
         "204":
           description: Reindeer removed successfully.
+        "401":
+          $ref: "#/components/responses/401"
+        "404":
+          $ref: "#/components/responses/Reindeer_404"
         "500":
           $ref: "#/components/responses/500"
 
@@ -354,9 +367,12 @@ paths:
       responses:
         "200":
           description: Reindeer updated successfully.
+        "401":
+          $ref: "#/components/responses/401"
+        "404":
+          $ref: "#/components/responses/Reindeer_404"
         "500":
           $ref: "#/components/responses/500"
-
 
 components:
   securitySchemes:
@@ -417,6 +433,36 @@ components:
               example: reindeer1
 
   responses:
+    "401":
+          description: Unauthorized - API key is missing or invalid.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: A message indicating authorization failure.
+              examples:
+                missingApiKey:
+                  summary: Missing API Key
+                  value:
+                    error: Unauthorized - API key is required.
+    "Reindeer_404":
+      description: Not Found - reindeer with the specified ID does not exist.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: A message indicating that the resource was not found.
+          examples:
+            reindeerNotFound:
+              summary: Reindeer not found
+              value:
+                error: Reindeer with the specified ID was not found.
     "500":
       description: Internal Server Error - something went wrong on the server side.
       content:
