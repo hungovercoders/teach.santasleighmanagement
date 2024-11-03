@@ -31,6 +31,20 @@ paths:
                     name: Prancer
                     age: 10
                     nose_colour: green
+                validRudolphRequestWithNotes:
+                  summary: Rudolph Request with notes
+                  value:
+                    name: Rudolph
+                    age: 6
+                    nose_colour: red
+                    notes: Rudolph has a shiny nose.
+                validPrancerRequestWithNotes:
+                  summary: Prancer Request with notes
+                  value:
+                    name: Prancer
+                    age: 10
+                    nose_colour: green
+                    notes: Prancer has bells on his antlers.
                 invalidNameRequest:
                   summary: Invalid name request
                   value:
@@ -75,7 +89,16 @@ paths:
                     name: Steve
                     age: 200
                     nose_colour: orange
-
+                invalidNotesLength:
+                  summary: Request with notes exceeding maximum length
+                  value:
+                    name: Rudolph
+                    age: 5
+                    nose_colour: red
+                    notes: >
+                      Rudolph has a shiny nose that lights up the night sky. Rudolph has a shiny nose that lights up the night sky.
+                      Rudolph has a shiny nose that lights up the night sky. Rudolph has a shiny nose that lights up the night sky.
+                      Rudolph has a shiny nose that lights up the night sky. Rudolph has a shiny nose that lights up the night sky.
       responses:
         "201":
           description: Reindeer added successfully.
@@ -98,6 +121,22 @@ paths:
                     name: Prancer
                     age: 10
                     nose_colour: green
+                successfulRudolphResponseWithNotes:
+                  summary: Response for successfully adding Rudolph with notes
+                  value:
+                    id: reindeer1
+                    name: Rudolph
+                    age: 6
+                    nose_colour: red
+                    notes: Rudolph has a shiny nose.
+                successfulPrancerResponseWithNotes:
+                  summary: Response for successfully adding Prancer with notes
+                  value:
+                    id: reindeer2
+                    name: Prancer
+                    age: 10
+                    nose_colour: green
+                    notes: Prancer has bells on his antlers.
         "400":
           description: Bad request - validation errors.
           content:
@@ -166,6 +205,12 @@ paths:
                       - "The 'name' field must be one of: Dasher, Dancer, Prancer, Vixen, Comet, Cupid, Donner, Blitzen, Rudolph."
                       - The 'age' field must be an integer between 0 and 100.
                       - "The 'nose_colour' field must be one of: red, blue, green."
+                invalidNotesLength:
+                  summary: Error response for notes exceeding maximum length
+                  value:
+                    error: Invalid request body
+                    details:
+                      - The 'notes' field must be at most 100 characters long.
         "500":
           description: Internal Server Error - something went wrong on the server side.
           content:
@@ -292,6 +337,8 @@ components:
       type: object
       required:
         - name
+        - age
+        - nose_colour
       properties:
         name:
           type: string
@@ -321,6 +368,11 @@ components:
             - red
             - blue
             - green
+        notes:
+          type: string
+          description: Additional notes about the reindeer.
+          example: Rudolph has a shiny nose.
+          maxLength: 100
 
     Reindeer:
       allOf:
