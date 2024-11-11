@@ -1,1 +1,13 @@
-GET http://0.0.0.0:4010/reindeers
+GET http://localhost:8080/reindeers
+
+
+### Create a new reindeer
+
+POST http://localhost:8080/reindeers
+Content-Type: application/json
+
+{
+  "name": "Prancer",
+  "age": 6,
+  "nose_colour": "red"
+}
